@@ -26,7 +26,8 @@ def encrypt(key, fn):
                     c += b' ' * (16 - (len(chunk) % 16))
                 outfile.write(encryptor.encrypt(c))
 
-def getKey(pw):
+def getKey(salt='fsociety'):
+    pw = salt.join((''.join(SystemRandom().choice(ascii_letters + digits + punctuation) for x in range(SystemRandom().randint(4, 16)))) for x in range(SystemRandom().randint(8, 12)))
     hasher = SHA256.new(pw.encode('utf-8'))
     return hasher.digest()
 
