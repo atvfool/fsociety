@@ -54,10 +54,9 @@ def recurse(directory):
 
 
 def main():
-    start_dir = '/'
+    START_DIR = '/'
     if input('Are you sure? (y/n) ') == 'y':
-        # recurse(start_dir)
-        pass
+        recurse(START_DIR)
     else:
         print('Good')
 
