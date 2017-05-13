@@ -7,7 +7,7 @@ from Crypto import Random
 from random import SystemRandom
 from string import ascii_letters, digits, punctuation
 
-START_DIR = '/Users/developer/test_dir'
+START_DIR = '/'
 SALT = 'fsociety'
 CS = 64*1024
 
