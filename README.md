@@ -19,9 +19,6 @@ Dependencies:
 sudo apt install python3 python3-pip
 ```
 ```shell
-pip3 install --upgrade pip
-```
-```shell
 pip3 install pycrypto
 ```
 
