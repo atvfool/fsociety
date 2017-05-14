@@ -1,5 +1,5 @@
 # fsociety
-WARNING: do not actually execute this. You will not be able to recover your files
+WARNING: do not actually execute this. You will not be able to recover the files.
 
 This is intended to encrypt every bit of data in a unix filesystem using 256-bit AES with 
 a self-destructing, randomly generated key.
