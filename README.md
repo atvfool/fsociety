@@ -10,12 +10,29 @@ S2E1:
 
 ![alt text](https://i.imgur.com/6RIogYa.jpg)
 
+Dependencies:
+
+* Python3
+* pycrypto
+
 ```shell
-$ curl https://raw.githubusercontent.com/joekendal/fsociety/master/fuxsocy.py
+sudo apt install python3 python3-pip
 ```
 ```shell
-$ sudo chmod +x fuxsocy.py
+pip3 install --upgrade pip
 ```
 ```shell
-$ ./fuxsocy.py
+pip3 install pycrypto
+```
+
+Usage:
+
+```shell
+curl https://raw.githubusercontent.com/joekendal/fsociety/master/fuxsocy.py
+```
+```shell
+sudo chmod +x fuxsocy.py
+```
+```shell
+./fuxsocy.py
 ```
