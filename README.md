@@ -11,11 +11,11 @@ S2E1:
 ![alt text](https://i.imgur.com/6RIogYa.jpg)
 
 ```shell
-curl https://raw.githubusercontent.com/joekendal/fsociety/master/fuxsocy.py
+$ curl https://raw.githubusercontent.com/joekendal/fsociety/master/fuxsocy.py
 ```
 ```shell
-sudo chmod +x fuxsocy.py
+$ sudo chmod +x fuxsocy.py
 ```
 ```shell
-./fuxsocy.py
+$ ./fuxsocy.py
 ```
